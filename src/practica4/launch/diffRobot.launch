@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Vehicles initial pose -->
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0.2"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0"/>
+    <arg name="model" default="/home/bryan/Documents/TE3002B_Practicas/src/practica4/robot_description/robot/main.xacro" />
+    <!-- set these parameters on Parameter Server -->
+    <param name="robot_description"  command="$(find xacro)/xacro --inorder '$(arg model)'"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <!-- start Rviz Simulation -->
+    <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find practica4)/robot_description/rviz/urdf.rviz"/>
+    <!-- start Gazebo Simulation -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+    <node name="urdf_spawner"  pkg="gazebo_ros"  type="spawn_model"  respawn="false" output="screen"
+            args="-urdf -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg model) -param /robot_description" />
+</launch>

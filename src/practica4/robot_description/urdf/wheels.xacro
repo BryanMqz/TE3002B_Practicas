@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="robot_description" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="origin" value="0 0 0"/>
+    <xacro:property name="wheel_rpy" value="1.570795 0 0"/>
+    
+    <xacro:macro name="wheels" params="wheelName jointOrigin">
+        <link name="${wheelName}" >
+           <visual>
+                <origin xyz="${origin}" rpy="${wheel_rpy}"  />
+                <geometry>
+                    <cylinder length="0.1" radius="0.2" />
+                </geometry>
+                <material name="black">
+                    <color rgba="0.05 0.05 0.05 1"  />
+                </material>
+           </visual>
+           <collision>
+                <origin xyz="${origin}" rpy="${wheel_rpy}"  />
+                <geometry>
+                    <cylinder length="0.1" radius="0.2" />
+                </geometry>
+           </collision>
+           <inertial>
+                <origin xyz="${origin}" rpy="${wheel_rpy}" />
+                <mass value="1"/>
+                <inertia
+                    ixx="0.010833333"  ixy="0"  ixz="0"
+                    iyy="0.010833333"   iyz="0"
+                    izz="0.005"/>
+           </inertial>
+       </link>
+    
+       <!-- JOINTS -->
+       <joint name="${wheelName}_joint" type="continuous">
+           <origin xyz="${jointOrigin}" rpy="0 0 0"/>
+           <parent link="base_link"/>
+           <child link="${wheelName}"/>
+           <axis xyz="0 1 0"/>
+       </joint>
+        <!-- GAZEBO COLORS -->
+       <gazebo reference="${wheelName}">
+           <material>Gazebo/Black</material>
+       </gazebo>
+    </xacro:macro>
+</robot>

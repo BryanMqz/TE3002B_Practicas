@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot name="robot_description" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="origin" value="0 0 0"/>
+    <xacro:property name="box_size" value="0.5 0.5 0.25"/>
+    
+    <xacro:macro name="base">
+    
+        <!-- Base Link -->
+        <link name="base_link">
+            <visual>
+               <origin xyz="${origin}" rpy="${origin}"/>
+               <geometry>
+                   <box size="${box_size}"/>
+               </geometry>
+               <material name="blue">
+                   <color rgba="0 0.5 1 1" />
+               </material>
+           </visual>
+           <collision>
+               <origin xyz="${origin}" rpy="${origin}"/>
+               <geometry>
+                   <box size="${box_size}"/>
+               </geometry>
+           </collision>
+           <inertial>
+                <origin xyz="${origin}" rpy="${origin}"/>
+                <mass value="2"/>
+                <inertia
+                    ixx="0.026041667" ixy="0"  ixz="0"
+                    iyy="0.026041667"  iyz="0"
+                    izz="0.010416667"/>
+            </inertial>
+           <!-- Caster -->
+           <visual name="caster">
+               <origin xyz="0.2 0 -0.125" rpy="${origin}" />
+               <geometry>
+                   <sphere radius="0.05" />
+               </geometry>
+           </visual>
+       </link>
+    
+        <gazebo reference="base_link">
+           <material>Gazebo/Blue</material>
+        </gazebo>
+    </xacro:macro>
+</robot>

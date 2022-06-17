@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="robot_description" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:arg name="leftWheelPose" default="0 0.3 0"/>
+    <xacro:arg name="rightWheelPose" default="0 -0.3 0"/>
+    <xacro:include filename="/home/bryan/Documents/TE3002B_Practicas/src/practica4/robot_description/urdf/base.xacro"/>
+    <xacro:include filename="/home/bryan/Documents/TE3002B_Practicas/src/practica4/robot_description/urdf/sensors.xacro"/>
+    <xacro:include filename="/home/bryan/Documents/TE3002B_Practicas/src/practica4/robot_description/urdf/wheels.xacro"/> 
+    
+    <xacro:base/>
+    <xacro:wheels wheelName="leftWheel" jointOrigin="$(arg leftWheelPose)"/>
+    <xacro:wheels wheelName="rightWheel" jointOrigin="$(arg rightWheelPose)"/>
+    <xacro:sensors sensorName="imu" rpy="0 0 0" size="0.1 0.1 0.025" jointOrigin="0 0 0.125"/>
+    <xacro:sensors sensorName="camera" rpy="0 1.570795 0" size="0.1 0.2 0.025" jointOrigin="0.26 0 0"/>
+</robot>
