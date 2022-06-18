@@ -5,6 +5,7 @@ from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 from math import atan2, sqrt
 import time
+from std_msgs.msg import Empty
 
 class turtle():
 	def __init__(self):
@@ -13,6 +14,8 @@ class turtle():
 		self.vel_pub=rospy.Publisher('/turtle1/cmd_vel',Twist,queue_size=10)
 		self.rate=rospy.Rate(10)                         # set at 10 Hz
 		self.pose_sub=rospy.Subscriber('/turtle1/pose',Pose,self.callback)
+		# Para el servicio si estoy usando el import correcto?
+		#self.srv_pub=rospy.Publisher("/waypoint_Info",Empty,queue_size=2)
 		
 	def callback(self,data):                                 #Update value of poses
 		self.position=data
@@ -34,7 +37,9 @@ class turtle():
 		Kp=1
 		Kd=0.1
 		Ki=0.0001
+		#Distancia que servira para mi servicio
 		dist_prev=sqrt((self.position.x-goal.x)**2+(self.position.y-goal.y)**2)
+
 		e_sum=0           										#Initialise error summation terms for integral control
 		steer_sum=0
 		steer_prev=(atan2(goal.y - self.position.y, goal.x - self.position.x)-self.position.theta)
@@ -57,8 +62,14 @@ class turtle():
 				break
 		#print("Total time taken:",stop_time-start_time)
 
+		#Waypoints recorridos para mi servicio
+		#wp=i+1
+		#publicar los dos datos que el servicio usara
+		#self.srv_pub.publish(dist_prev, wp)
+
 waypoints_ = rospy.get_param("waypoints")
 i = -1
+#wp = 0
 x=turtle()
 while not rospy.is_shutdown():
 	i+=1

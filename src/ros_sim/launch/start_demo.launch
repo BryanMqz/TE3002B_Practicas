@@ -9,9 +9,10 @@
     </node>
     <node name="gotogoal" pkg="ros_sim" type="gotogoal.py" respawn="false" output="screen" >
       <param name="turtle" type="string" value="turtle1" />
-      <rosparam param="/waypoints">[[1,10],[9,2],[7,10],[2,2],[4,8]]</rosparam>
+      <!--<rosparam param="/waypoints">[[1,10],[9,2],[7,10],[2,2],[4,8]]</rosparam>-->
+      <rosparam param="/waypoints">[[5,8],[9,2],[1,5],[7,10],[4,1]]</rosparam>
     </node>
-
+  
     <node 
         type="rviz" 
         name="rviz" 
